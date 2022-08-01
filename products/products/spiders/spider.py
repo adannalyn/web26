@@ -10,9 +10,9 @@ class SpiderSpider(scrapy.Spider):
         all_product = response.xpath('//article[@class="prd _box _hvr"]')
         
         for product in all_product:
-            name = product.xpath('.//div[@class="name"]').extract_first()
-            price = product.xpath('.//div[@class="prc"]').extract_first()
-            image_url = self.start_urls[0] + product.xpath(".//a/img").extract_first()
+            name = product.xpath('.//div[@class="name"]/text()').extract_first()
+            price = product.xpath('.//div[@class="prc"]/text()').extract_first()
+            image_url = product.xpath(".//a/img/@data-src").extract_first()
             product_url = self.start_urls[0] + product.xpath('.//a[@class="core"]/@href').extract_first()
             yield {
                 'Name': name,
